@@ -17,5 +17,5 @@ repo sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-
 
 # clone needed repos
 git clone https://github.com/DerpFest-Devices/device_xiaomi_daisy -b 11 device/xiaomi/daisy
-git clone --depth=1 https://github.com/DerpFest-Devices/device_xiaomi_daisy -b 11 vendor/xiaomi/daisy
+git clone --depth=1 https://github.com/DerpFest-Devices/vendor_xiaomi_daisy -b 11 vendor/xiaomi/daisy
 git clone --depth=1 https://github.com/acras01/kernel_xiaomi_msm8953 -b eleven kernel/xiaomi/msm8953 
