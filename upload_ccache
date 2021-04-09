@@ -10,4 +10,5 @@ com ()
 
 time com ccache 1 # Compression level 1, its enough
 
+time rclone copy $send_zip remote:ccache -P
 time rclone copy ccache.tar.gz remote:/ccache -P
