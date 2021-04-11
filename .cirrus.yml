@@ -4,7 +4,7 @@ env: # Environt variable to pass to all tasks
 
     # For rclone with google drive or any cloud! After first commit pushing, login to https://cirrus-ci.com , click top left corner 3 dot menu, click repository(yourname/aosp-builder) > Repository Settings > Secured Variables > enter content of ~/.config/rclone/rclone.conf (from pc where you setup rclone) > ENCRYPT, copy that ENCRYPTED hash
     # ENCRYPTED variables is unique for every repository, so you cant use my one, create you rclone config https://rclone.org/drive/#making-your-own-client-id
-    rclone_config: "ENCRYPTED[86cc774f9c9af53a3b9d0fee8c389010f81fc52eba9dbe1d82a45a164b902f68bb9b8af903e05682674ed6a0a5880707]"
+    rclone_config: "ENCRYPTED[8675d0e91a7e2edf18466b79cc62480611007b2e3f399533c3ab345d6b7af4a4e19f540fc94a5819b956f91bd6171518]"
 
 task:
     name: aosp
@@ -13,13 +13,21 @@ task:
       image: apon77/aosp:latest
       cpu: 8
       memory: 24G
+
     download_ccache_background_script:
-      - bash download_ccache
+      - cd /tmp && mkdir -p ~/.config/rclone
+      - echo "$rclone_config" > ~/.config/rclone/rclone.conf
+      - rclone copy remote:/ccache/ccache.tar.gz /tmp -P && tar xf ccache.tar.gz
+
     sync_script:
       - bash sync
+
     build_script:
       - bash build
+
     upload_build_script:
       - bash upload_build
+
     upload_ccache_script:
-      - bash upload_ccache
+      - cd /tmp && tar --use-compress-program="pigz -k -1 " -cf ccache.tar.gz ccache
+      - rclone copy ccache.tar.gz remote:/ccache -P

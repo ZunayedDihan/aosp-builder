@@ -4,15 +4,17 @@ cd /tmp/rom # Depends on where source got synced
 find .repo/ -delete
 
 
-curl https://del.dog/xilocawecr >> gms_full.mk
-mv gms_full.mk vendor/gms/
+curl https://nekobin.com/siwarifiwi >> gms_full.mk
+mv gms_full.mk vendor/gms/*
 rm -rf device/generic/opengl-transport
+
 # Normal build steps
 . build/envsetup.sh
 lunch derp_daisy-userdebug
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
+export SKIP_BOOT_JARS_CHECK=true && export WITHOUT_CHECK_API=true
 ccache -M 60G # It took only 6.4GB for mido
 ccache -o compression=true # Will save times and data to download and upload ccache, also negligible performance issue
 ccache -z # Clear old stats, so monitor script will provide real ccache statistics

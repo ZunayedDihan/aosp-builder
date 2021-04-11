@@ -12,8 +12,8 @@ git clone https://github.com/akhilnarang/scripts
 bash scripts/setup/android_build_env.sh && rm -rf scripts
 
 # Repo init and sync
-repo init --no-repo-verify --depth=1 -u git://github.com/DerpFest-11/manifest.git -b 11 -g default,-device,-mips,-darwin,-notdefault
-repo sync --no-tags --no-clone-bundle --current-branch --force-sync --optimized-fetch -j8
+repo init --depth=1 --no-repo-verify -u git://github.com/DerpFest-11/manifest.git -b 11 -g default,-device,-mips,-darwin,-notdefault
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 # clone needed repos
 git clone --depth=1 https://github.com/DerpFest-Devices/device_xiaomi_daisy -b 11 device/xiaomi/daisy
